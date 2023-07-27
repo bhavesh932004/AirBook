@@ -73,9 +73,30 @@ async function deleteAirplane(req, res) {
   }
 }
 
+/*  PATCH : /api/v1/airplanes/:id
+    req.body : {capacity}
+    req.params.id : id
+*/
+async function updateAirplane(req, res) {
+  console.log("inside controller");
+  try {
+    const airplane = await AirplaneService.updateAirplane(req.params.id, {
+      capacity: req.body.capacity,
+    });
+
+    SuccessResponse.message = "Successfully updated the airplane";
+    SuccessResponse.data = airplane;
+    return res.status(StatusCodes.OK).json(SuccessResponse);
+  } catch (error) {
+    ErrorResponse.error = error;
+    res.status(error.statusCode).json(ErrorResponse);
+  }
+}
+
 module.exports = {
   createAirplane,
   getAirplanes,
   getAirplane,
   deleteAirplane,
+  updateAirplane,
 };
