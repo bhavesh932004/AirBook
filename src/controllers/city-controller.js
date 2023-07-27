@@ -2,6 +2,9 @@ const { CityService } = require("../services");
 const { SuccessResponse, ErrorResponse } = require("../utils/common");
 const { StatusCodes } = require("http-status-codes");
 
+/* POST : /api/v1/cities
+   req.body : {name}
+*/
 async function createCity(req, res) {
   try {
     const city = await CityService.createCity({
@@ -16,6 +19,9 @@ async function createCity(req, res) {
   }
 }
 
+/* GET : /api/v1/cities
+    req.body : {}
+*/
 async function getCities(req, res) {
   try {
     const cities = await CityService.getCities();
