@@ -29,7 +29,7 @@ async function getAirplanes() {
     return response;
   } catch (error) {
     throw new AppError(
-      "Could not fetch airplanes",
+      "Could not fetch the airplanes",
       StatusCodes.INTERNAL_SERVER_ERROR
     );
   }
@@ -78,6 +78,7 @@ async function updateAirplane(id, data) {
       error.explanation = "Didn't find the airplane you requested to update";
       throw error;
     }
+
     throw new AppError(
       "Could not update the airplane",
       StatusCodes.INTERNAL_SERVER_ERROR
