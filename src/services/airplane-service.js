@@ -41,7 +41,7 @@ async function getAirplane(id) {
     return response;
   } catch (error) {
     if (error.statusCode == StatusCodes.NOT_FOUND) {
-      error.explanation = "Requested airplane not found";
+      error.explanation = "Didn't find the airplane you requested";
       throw error;
     }
 
@@ -52,8 +52,26 @@ async function getAirplane(id) {
   }
 }
 
+async function deleteAirplane(id) {
+  try {
+    const response = await airplaneRepository.destroy(id);
+    return response;
+  } catch (error) {
+    if (error.statusCode == StatusCodes.NOT_FOUND) {
+      error.explanation = "Didn't find the airplane you requested to delete";
+      throw error;
+    }
+
+    throw new AppError(
+      "Could not delete the airplane",
+      StatusCodes.INTERNAL_SERVER_ERROR
+    );
+  }
+}
+
 module.exports = {
   createAirplane,
   getAirplanes,
   getAirplane,
+  deleteAirplane,
 };

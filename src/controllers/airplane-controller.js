@@ -52,7 +52,24 @@ async function getAirplane(req, res) {
     return res.status(StatusCodes.OK).json(SuccessResponse);
   } catch (error) {
     ErrorResponse.error = error;
-    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(ErrorResponse);
+    res.status(error.statusCode).json(ErrorResponse);
+  }
+}
+
+/*  DELETE : /api/v1/airplanes/:id
+    req.body : {}
+    req.params.id : id
+*/
+async function deleteAirplane(req, res) {
+  console.log("inside controller");
+  try {
+    const airplane = await AirplaneService.deleteAirplane(req.params.id);
+    SuccessResponse.message = "Successfully deleted the airplane";
+    SuccessResponse.data = airplane;
+    return res.status(StatusCodes.OK).json(SuccessResponse);
+  } catch (error) {
+    ErrorResponse.error = error;
+    res.status(error.statusCode).json(ErrorResponse);
   }
 }
 
@@ -60,4 +77,5 @@ module.exports = {
   createAirplane,
   getAirplanes,
   getAirplane,
+  deleteAirplane,
 };
