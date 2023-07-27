@@ -7,8 +7,8 @@ const airplaneRepository = new AirplaneRepository();
 
 async function createAirplane(data) {
   try {
-    const airplane = await airplaneRepository.create(data);
-    return airplane;
+    const response = await airplaneRepository.create(data);
+    return response;
   } catch (error) {
     if (error.name === "SequelizeValidationError") {
       const explanation = [];
@@ -24,22 +24,36 @@ async function createAirplane(data) {
 }
 
 async function getAirplanes() {
-  console.log("inside service");
   try {
-    const airplanes = await airplaneRepository.getAll();
-    return airplanes;
+    const response = await airplaneRepository.getAll();
+    return response;
   } catch (error) {
-    if ((error.name = "TypeError")) {
-      throw new AppError(
-        "Interner serverl error, typeError",
-        StatusCodes.INTERNAL_SERVER_ERROR
-      );
+    throw new AppError(
+      "Could not fetch airplanes",
+      StatusCodes.INTERNAL_SERVER_ERROR
+    );
+  }
+}
+
+async function getAirplane(id) {
+  try {
+    const response = await airplaneRepository.get(id);
+    return response;
+  } catch (error) {
+    if (error.statusCode == StatusCodes.NOT_FOUND) {
+      error.explanation = "Requested airplane not found";
+      throw error;
     }
-    throw error;
+
+    throw new AppError(
+      "Could not fetch airplane",
+      StatusCodes.INTERNAL_SERVER_ERROR
+    );
   }
 }
 
 module.exports = {
   createAirplane,
   getAirplanes,
+  getAirplane,
 };
