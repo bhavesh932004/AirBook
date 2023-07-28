@@ -15,7 +15,7 @@ async function createCity(req, res) {
     return res.status(StatusCodes.CREATED).json(SuccessResponse);
   } catch (error) {
     ErrorResponse.error = error;
-    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(ErrorResponse);
+    return res.status(error.statusCode).json(ErrorResponse);
   }
 }
 
@@ -25,17 +25,69 @@ async function createCity(req, res) {
 async function getCities(req, res) {
   try {
     const cities = await CityService.getCities();
-    console.log(cities);
     SuccessResponse.message = "Successfully fetched all the cities";
     SuccessResponse.data = cities;
     return res.status(StatusCodes.OK).json(SuccessResponse);
   } catch (error) {
     ErrorResponse.error = error;
-    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(ErrorResponse);
+    return res.status(error.statusCode).json(ErrorResponse);
+  }
+}
+
+/* GET /api/v1/cities/:id
+    req.body : {}
+    req.params.id : id
+*/
+async function getCity(req, res) {
+  try {
+    const city = await CityService.getCity(req.params.id);
+    SuccessResponse.message = "Successfully fetched the city";
+    SuccessResponse.data = city;
+    res.status(StatusCodes.OK).json(SuccessResponse);
+  } catch (error) {
+    ErrorResponse.error = error;
+    res.status(error.statusCode).json(ErrorResponse);
+  }
+}
+
+/* DELETE /api/v1/cities/:id
+    req.body : {}
+    req.params.id : id
+*/
+async function deleteCity(req, res) {
+  try {
+    const data = await CityService.deleteCity(req.params.id);
+    SuccessResponse.message = "Successfully deleted the city";
+    SuccessResponse.data = data;
+    res.status(StatusCodes.OK).json(SuccessResponse);
+  } catch (error) {
+    ErrorResponse.error = error;
+    res.status(error.statusCode).json(ErrorResponse);
+  }
+}
+
+/* PATCH /api/v1/cities/:id
+    req.body : {name}
+    req.params.id : id
+*/
+async function updateCity(req, res) {
+  try {
+    const data = await CityService.updateCity(req.params.id, {
+      name: req.body.name,
+    });
+    SuccessResponse.message = "Successfully updated the city";
+    SuccessResponse.data = data;
+    res.status(StatusCodes.OK).json(SuccessResponse);
+  } catch (error) {
+    ErrorResponse.error = error;
+    res.status(error.statusCode).json(ErrorResponse);
   }
 }
 
 module.exports = {
   createCity,
   getCities,
+  getCity,
+  deleteCity,
+  updateCity,
 };

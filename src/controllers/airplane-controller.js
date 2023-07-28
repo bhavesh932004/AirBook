@@ -18,7 +18,7 @@ async function createAirplane(req, res) {
     return res.status(StatusCodes.OK).json(SuccessResponse);
   } catch (error) {
     ErrorResponse.error = error;
-    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(ErrorResponse);
+    res.status(error.statusCode).json(ErrorResponse);
   }
 }
 
@@ -34,7 +34,7 @@ async function getAirplanes(req, res) {
     return res.status(StatusCodes.OK).json(SuccessResponse);
   } catch (error) {
     ErrorResponse.error = error;
-    res.status(StatusCodes.INTERNAL_SERVER_ERROR).json(ErrorResponse);
+    res.status(error.statusCode).json(ErrorResponse);
   }
 }
 
@@ -62,9 +62,9 @@ async function getAirplane(req, res) {
 async function deleteAirplane(req, res) {
   console.log("inside controller");
   try {
-    const airplane = await AirplaneService.deleteAirplane(req.params.id);
+    const data = await AirplaneService.deleteAirplane(req.params.id);
     SuccessResponse.message = "Successfully deleted the airplane";
-    SuccessResponse.data = airplane;
+    SuccessResponse.data = data;
     return res.status(StatusCodes.OK).json(SuccessResponse);
   } catch (error) {
     ErrorResponse.error = error;
@@ -79,12 +79,12 @@ async function deleteAirplane(req, res) {
 async function updateAirplane(req, res) {
   console.log("inside controller");
   try {
-    const airplane = await AirplaneService.updateAirplane(req.params.id, {
+    const data = await AirplaneService.updateAirplane(req.params.id, {
       capacity: req.body.capacity,
     });
 
     SuccessResponse.message = "Successfully updated the airplane";
-    SuccessResponse.data = airplane;
+    SuccessResponse.data = data;
     return res.status(StatusCodes.OK).json(SuccessResponse);
   } catch (error) {
     ErrorResponse.error = error;
