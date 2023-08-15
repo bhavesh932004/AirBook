@@ -8,6 +8,11 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
+      this.hasMany(models.Flight, {
+        foreignKey: "airplaneID",
+        onUpdate: "cascade",
+        onDelete: "cascade",
+      });
       // define association here
     }
   }
