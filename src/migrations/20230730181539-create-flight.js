@@ -20,6 +20,7 @@ module.exports = {
           model: "Airplanes",
           key: "id",
         },
+        onDelete: "cascade",
       },
       departureAirportID: {
         type: Sequelize.STRING,
@@ -28,6 +29,7 @@ module.exports = {
           model: "Airports",
           key: "code",
         },
+        onDelete: "cascade",
       },
       arrivalAirportID: {
         type: Sequelize.STRING,
@@ -36,6 +38,7 @@ module.exports = {
           model: "Airports",
           key: "code",
         },
+        onDelete: "cascade",
       },
       departureTime: {
         type: Sequelize.DATE,

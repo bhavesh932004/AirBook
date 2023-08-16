@@ -15,7 +15,7 @@ async function createAirplane(req, res) {
 
     SuccessResponse.message = "Successfully created an airplane";
     SuccessResponse.data = airplane;
-    return res.status(StatusCodes.OK).json(SuccessResponse);
+    return res.status(StatusCodes.CREATED).json(SuccessResponse);
   } catch (error) {
     ErrorResponse.error = error;
     res.status(error.statusCode).json(ErrorResponse);
@@ -60,7 +60,9 @@ async function getAirplane(req, res) {
     req.params.id : id
 */
 async function deleteAirplane(req, res) {
-  console.log("inside controller");
+  console.log(
+    "inside controller"
+  ); /*    you can write some airplane specific queries here   */
   try {
     const data = await AirplaneService.deleteAirplane(req.params.id);
     SuccessResponse.message = "Successfully deleted the airplane";
