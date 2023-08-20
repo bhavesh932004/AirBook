@@ -1,6 +1,7 @@
 const { StatusCodes } = require("http-status-codes");
 const { ErrorResponse } = require("../utils/common");
-const { AppError } = require("../utils/errors/app-error");
+const { AppError } = require("../utils/errors");
+const { DateTimeHelper } = require("../utils/helpers");
 
 async function validateCreateRequest(req, res, next) {
   let validationErrors = [];
@@ -34,11 +35,13 @@ async function validateCreateRequest(req, res, next) {
   }
 
   if (req.body.departureTime && req.body.arrivalTime) {
-    let departureTime = new Date(req.body.departureTime),
-      arrivalTime = new Date(req.body.arrivalTime);
-
-    if (departureTime.getTime() > arrivalTime.getTime())
+    let DTGreaterThanAT = DateTimeHelper.compareTime(
+      req.body.departureTime,
+      req.body.arrivalTime
+    );
+    if (DTGreaterThanAT) {
       validationErrors.push("departureTime cannot be greater than arrivalTime");
+    }
   }
 
   if (validationErrors.length) {

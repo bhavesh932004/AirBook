@@ -1,6 +1,5 @@
 const { ErrorResponse } = require("../utils/common");
-const { error } = require("../utils/common/error-response");
-const { AppError } = require("../utils/errors/app-error");
+const { AppError } = require("../utils/errors");
 const { StatusCodes } = require("http-status-codes");
 
 function validateCreateRequest(req, res, next) {

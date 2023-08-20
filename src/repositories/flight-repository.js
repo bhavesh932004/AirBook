@@ -1,7 +1,7 @@
 const CrudRepository = require("./crud-repository");
 const { Flight, Airplane } = require("../models");
 const { Op } = require("sequelize");
-const { AppError } = require("../utils/errors/app-error");
+const { AppError } = require("../utils/errors");
 const { StatusCodes } = require("http-status-codes");
 
 class FlightRepository extends CrudRepository {
@@ -38,10 +38,7 @@ class FlightRepository extends CrudRepository {
     } catch (error) {
       console.log("Inside flight repository catch, returned from sequelize");
       console.log("Flight repository error : ", error);
-      throw new AppError(
-        "Could not create flight inside flight repository",
-        StatusCodes.INTERNAL_SERVER_ERROR
-      );
+      throw error;
     }
   }
 }

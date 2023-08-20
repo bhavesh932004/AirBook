@@ -1,6 +1,6 @@
 const { StatusCodes } = require("http-status-codes");
 const { FlightRepository } = require("../repositories");
-const { AppError } = require("../utils/errors/app-error");
+const { AppError } = require("../utils/errors");
 
 const flightRepository = new FlightRepository();
 
@@ -15,7 +15,7 @@ async function createFlight(data) {
     return response;
   } catch (error) {
     console.log("Inside flight service catch, returned from flight repository");
-    console.log("Error : ", error);
+    console.log("Flight service Error : ", error);
 
     throw new AppError(
       "Could not create the flight",

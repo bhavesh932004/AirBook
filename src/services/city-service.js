@@ -1,6 +1,6 @@
 const { StatusCodes } = require("http-status-codes");
 const { CityRepository } = require("../repositories");
-const { AppError } = require("../utils/errors/app-error");
+const { AppError } = require("../utils/errors");
 const { STRING } = require("sequelize");
 
 const cityRepository = new CityRepository();
